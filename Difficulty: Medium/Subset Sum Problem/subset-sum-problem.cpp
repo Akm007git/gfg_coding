@@ -11,43 +11,54 @@ class Solution{
     private:
     bool solve(vector<int>&arr,int sum,int n,vector<vector<int>>&dp)
     {
-        // base
-        if(sum == 0)
+        // base initialization
+        for(int i = 0;i<n+1;i++)
         {
-            return true; // n jekono hok na keno sum == 0 easily kora jabe thats why true
-        }
-        if(n == 0)
-        {
-            return false;
+            for(int j = 0;j<sum+1;j++)
+            {
+                if(i == 0) // n jodi1,2,3,4, sum  0 ki possible no its not
+                {
+                    dp[i][j] = 0;
+                }
+                if(j == 0) // sum 0 kora possible
+                {
+                    dp[i][j] = 1;
+                }
+            }
         }
         
-        if(dp[n][sum] != -1 )
+        // choice diagram
+        
+        for(int i = 1;i<n+1;i++)
         {
-            return dp[n][sum];
+            for(int j = 0;j<sum+1;j++)
+            {
+                if(arr[i-1] <= j)
+                {
+                    dp[i][j] = dp[i-1][j-arr[i-1]] || dp[i-1][j]; // take || mnot take
+                }
+                else
+                {
+                    dp[i][j] = dp[i-1][j]; // only not take
+                }
+            }
         }
         
-        // recursibve sol
+        return dp[n][sum];
         
-        if(arr[n-1] <= sum) // traversing from backward
-        {
-            // take ot not take
-            return dp[n][sum] = solve(arr,sum - arr[n-1] , n-1,dp) || solve (arr,sum,n-1,dp) ;
-        }
-        else // if greater then the sum then not take
-        {
-            return dp[n][sum] =  solve(arr,sum,n-1,dp);
-        }
     }
     
 public:
     bool isSubsetSum(vector<int>arr, int sum){
-        // MEMO IZATION
+        // Tabulization
         int n  = arr.size();
-        vector<vector<int>>dp(n+1,vector<int>(sum+1,-1));
+        vector<vector<int>>dp(n+1,vector<int>(sum+1));
         
         return solve(arr,sum,n,dp);
     }
 };
+
+
 
 //{ Driver Code Starts.
 int main() 
