@@ -9,43 +9,44 @@ using namespace std;
 // User function Template for C++
 
 class Solution{
-    private:
-    int solve(int length[],int price[],int N,int n,vector<vector<int>>&dp)
+    private: 
+    int solve(int val[],vector<int>&wt,int n,int w,vector<vector<int>>&dp)
     {
-        if(N == 0 || n == 0)
+        // base
+        if(n == 0 || w == 0)
         {
             return 0;
         }
+        
         // memo
-        if(dp[N][n] != -1)
+        if(dp[n][w] != -1)
         {
-            return dp[N][n];
+            return dp[n][w];
         }
         
-        // choice diagram
-        if(length[n-1] <= N)
+        // rec
+        if(wt[n-1] <= w)
         {
-            return dp[N][n] =  max((price[n-1] + solve(length,price,N-length[n-1],n,dp)),solve(length,price,N,n-1,dp)); // take ,not take
+            return dp[n][w] =   max( val[n-1] + solve(val,wt,n,w-wt[n-1],dp), solve(val,wt,n-1,w,dp) );
         }
         else
         {
-            return dp[N][n] =  solve(length,price,N,n-1,dp); // not take
+            return dp[n][w] =  solve(val,wt,n-1,w,dp);
         }
     }
+    
   public:
     int cutRod(int price[], int n) {
         //code here
-        int length[n];
-        for(int i=0;i<n;i++)
-        {
-            length[i] = i+1;
-        }
-        // length array ready
-        // indexing from last(n); thats why n, n
+        vector<int>len(n);
         vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+        for(int i = 0;i<n;i++)
+        {
+            len[i] = i + 1;
+        }
         
-        return solve(length,price,n,n,dp);
         
+       return solve(price,len,n,n,dp);
     }
 };
 
