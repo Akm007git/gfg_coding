@@ -64,17 +64,17 @@ int solve(vector<int>&coins,int n,int sum,vector<vector<int>>&dp)
     }
     
     // 2nd row initialization
-      for (int j = 1; j < sum + 1; j++) {
-        if (j % coins[0] == 0) {
-            dp[1][j] = j / coins[0];
-        } else {
-            dp[1][j] = INT_MAX - 1;
-        }
-    }
+    //   for (int j = 1; j < sum + 1; j++) {
+    //     if (j % coins[0] == 0) {
+    //         dp[1][j] = j / coins[0];
+    //     } else {
+    //         dp[1][j] = INT_MAX - 1;
+    //     }
+    // }
     
     // choice diaga
     
-    for(int i = 2;i<n+1;i++)
+    for(int i = 1;i<n+1;i++)
     {
         for(int j=1;j<sum+1;j++)
         {
@@ -114,6 +114,7 @@ int solve(vector<int>&coins,int n,int sum,vector<vector<int>>&dp)
 	} 
 	  
 };
+
 
 //{ Driver Code Starts.
 int main() 
