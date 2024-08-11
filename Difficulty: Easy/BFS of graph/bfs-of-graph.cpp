@@ -4,42 +4,42 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
+    private:
+    void solve(int start,vector<int>adj[],vector<bool>&visited,vector<int>&ans)
+    {
+        queue<int>q;
+        q.push(start);
+        visited[start] = true;
+        
+        while(!q.empty())
+        {
+            int node = q.front();
+            q.pop();
+            
+            ans.push_back(node);
+            
+            for(auto it:adj[node])
+            {
+                if(!visited[it])
+                {
+                    visited[it] = true;
+                    q.push(it);
+                }
+            }
+        }
+    }
   public:
     // Function to return Breadth First Traversal of given graph.
     vector<int> bfsOfGraph(int V, vector<int> adj[]) {
         // Code here
-        int visited[V] {0}; // number of nodes
-        visited[0] = true;
+        vector<int>ans;
+        vector<bool>visited(V,false);
         
-        queue<int>q;
-        q.push(0);
-        
-        vector<int>bfs;// store the value
-        
-        while(!q.empty())
-        {
-            int node  = q.front();
-            q.pop();
+       
+                solve(0,adj,visited,ans);
             
-            // ad into ans
-            bfs.push_back(node);
-            
-            // traverse all adj
-            for(auto it:adj[node]) // adj[node] represents a vector and it all the eemnt
-            {
-                if(visited[it] == 0)
-                {
-                    // two things
-                    // mark viited
-                    // push queueue
-                   
-                    q.push(it);
-                     visited[it] = 1;
-                }
-            }
-        }
-        return bfs;
         
+        return ans;
     }
 };
 
