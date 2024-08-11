@@ -3,34 +3,37 @@
 using namespace std;
 
 // } Driver Code Ends
-
 class Solution {
+    
     private:
-    void solve(vector<int>adj[],int start,int visited[],vector<int>&dfs)
+    void solve(int start,vector<int>adj[],vector<bool>&visited,vector<int>&ans)
     {
-        // initially 
-        visited[start] = 1;
-        dfs.push_back(start);
+        // initially
+        ans.push_back(start);
+        visited[start] = true;
         
+        // traverse aadj
         for(auto it:adj[start])
         {
-            if(visited[it] == 0)
+            if(!visited[it])
             {
-                solve(adj,it,visited,dfs);
+               solve(it,adj,visited,ans);
             }
         }
         
-        return ;
+        
     }
   public:
     // Function to return a list containing the DFS traversal of the graph.
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
         // Code here
-        int visited[V] = {0};
-        int start = 0;
-        vector<int>dfs;
-        solve(adj,start,visited,dfs);
-        return dfs;
+        vector<bool>visited(V,false);
+        vector<int>ans;
+        
+        solve(0,adj,visited,ans);
+        
+        
+        return ans;
     }
 };
 
