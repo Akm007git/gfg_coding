@@ -5,62 +5,48 @@ using namespace std;
 // } Driver Code Ends
 class Solution
 {
+    private:
+    void solve(int start,stack<int>&st,vector<int>adj[],vector<bool>&visited)
+    {
+        // base type
+        visited[start] = true;
+        
+        for(auto it:adj[start])
+        {
+            if(!visited[it])
+            {
+                solve(it,st,adj,visited);
+            }
+        }
+        // while returning
+        // push in stack
+        
+        st.push(start);
+    }
 	public:
 	//Function to return list containing vertices in Topological order. 
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
 	    // code here
-	    vector<int>indegree(V);
+	    stack<int>st;
+	    vector<bool>visited(V,false);
 	    
-	    for(int i = 0;i< V;i++)
-	    {
-	        // 1.  store the indegreee
-	        for(auto it:adj[i])
-	        {
-	            indegree[it]++;
-	        }
-	    }
-	    
-	    // mapping done
-	    
-	    queue<int>q;
-	    
-	    // 2. push into queue as 0 indegree as initial point
-	    // also initit a map to store  the data
-	    
-	    for(int i = 0;i<V;i++)
-	    {
-	        if(indegree[i] == 0)
-	        {
-	            q.push(i);
-	        }
-	    }
-	    
-	    vector<int>v;
-	    
-	    // travrese the queueue
-	    while(!q.empty())
-	    {
-	        int node = q.front();
-	        q.pop();
-	        
-	        // store the node
-	        v.push_back(node);
-	        
-	        // traverse the neighbour
-	        
-	        for(auto it:adj[node])
-	        {
-	            indegree[it]--;
-	            
-	            if(indegree[it] == 0)
-	            {
-	                q.push(it);
-	            }
-	        }
-	    }
-	    
-	    return v;
+	   for(int i = 0;i<V;i++)
+	   {
+	       if(!visited[i])
+	       {
+	           solve(i,st,adj,visited);
+	       }
+	   }
+	   // got everitjing in stack
+	   vector<int>v;
+	   while(!st.empty())
+	   {
+	       v.push_back(st.top());
+	       st.pop();
+	   }
+	   
+	   return v;
 	}
 };
 
