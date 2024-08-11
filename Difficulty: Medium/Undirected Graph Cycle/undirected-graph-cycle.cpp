@@ -5,53 +5,58 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
     private:
-    bool bfs(int start,vector<int>adj[],vector<bool>&visited)
+    bool solve(int start,vector<int>adj[],vector<bool>&visited)
     {
-        // initially push in queueue
-        queue<pair<int,int>>q; // node and parent inpair
-        q.push({start,-1});
+        int parent  = -1; // for firat case
+        queue<pair<int,int>>q;
+        q.push({start,parent});
         visited[start] = true;
         
         while(!q.empty())
         {
             int node = q.front().first;
-            int parent = q.front().second;
+             parent = q.front().second;
             q.pop();
             
+            // adj nodes
             for(auto it:adj[node])
             {
                 if(!visited[it])
                 {
-                    visited[it] = true;
                     q.push({it,node});
+                    visited[it] = true;
                 }
-                else if(it != parent && visited[it])
+                else
                 {
-                    return true;
+                    if(it != parent && visited[it])
+                    {
+                        return true;
+                    }
                 }
-
             }
+          
         }
+          return false;
         
-        return false;
     }
-  public:
+  public: 
     // Function to detect cycle in an undirected graph.
     bool isCycle(int V, vector<int> adj[]) {
         // Code here
         vector<bool>visited(V,false);
         
-        for(int  i  = 0;i<V;i++)
+        for(int i = 0;i<V;i++)
         {
             if(!visited[i])
             {
-                if (bfs(i,adj,visited))
+                if(solve(i,adj,visited))
                 {
                     return true;
                 }
             }
         }
         return false;
+        
     }
 };
 
