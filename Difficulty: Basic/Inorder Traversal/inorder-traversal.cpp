@@ -31,25 +31,24 @@ struct Node {
 
 class Solution {
     private:
-    void solve(Node* &root , vector<int>&v)
+    void solve(Node* root,vector<int>&v)
     {
-        if(!root)
-        {
-            return;
-        }
+        if(!root) return ;
         
-        // tevarse
         solve(root->left,v);
         v.push_back(root->data);
         solve(root->right,v);
+        
+        
     }
+    
   public:
     // Function to return a list containing the inorder traversal of the tree.
     vector<int> inOrder(Node* root) {
         // Your code here
-       vector<int>ans;
-       solve(root,ans);
-       return ans;
+        vector<int>v;
+        solve(root,v);
+        return v;
     }
 };
 
