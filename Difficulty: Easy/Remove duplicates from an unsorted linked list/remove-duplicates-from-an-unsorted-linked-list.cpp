@@ -3,22 +3,21 @@
 using namespace std;
 
 struct Node {
-  int data;
-  struct Node *next;
-  Node(int x) {
-    data = x;
-    next = NULL;
-  }
+    int data;
+    Node *next;
+
+    Node(int x)
+        : data(x)
+        , next(nullptr) {}
 };
 
-void print(Node *root)
-{
-Node *temp = root;
-while(temp!=NULL)
-{
-cout<<temp->data<<" ";
-temp=temp->next;
-}
+void printList(Node *head) {
+    Node *temp = head;
+    while (temp != nullptr) {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
 }
 
 
@@ -36,39 +35,36 @@ struct Node {
 };
 */
 
-
-class Solution
-{
-    public:
-    //Function to remove duplicates from unsorted linked list.
-    Node * removeDuplicates( Node *head) 
-    {
-     // your code goes here
-     if(!head || !head->next)
-     {
+class Solution {
+  public:
+    Node *removeDuplicates(Node *head) {
+        // your code goes here
+         if(!head || !head->next)
+        {
          return head;
-     }
-     
-     unordered_map<int,bool>visited;
-     Node* temp = head;
-     while(temp->next != NULL)
-     {
-         visited[temp->data] = true;
-         
-         if(visited[temp->next->data] == true)
-         {
-             Node* _next = temp->next->next;
-             Node* dup = temp->next;
-             temp->next = _next;
-             dup->next  = NULL;
-         }
-         else
-         {
-             temp = temp->next;
-         }
-     }
-     return head;
-     
+      }
+        unordered_map<int,bool>visited;
+        Node* temp =head;
+        while(temp->next)
+        {
+            visited[temp->data] = true;
+            
+            // alredy visited
+            if(visited[temp->next->data] == true)
+            {
+                Node* _next = temp->next->next;
+                Node* dup = temp->next;
+                temp->next = _next;
+                delete dup;
+                dup->next = NULL;
+            }
+            else
+            {
+                temp = temp->next;
+            }
+        }
+        
+        return head;
     }
 };
 
@@ -76,35 +72,40 @@ class Solution
 //{ Driver Code Starts.
 
 int main() {
-	// your code goes here
-	int T;
-	cin>>T;
-	
-	while(T--)
-	{
-		int K;
-		cin>>K;
-		struct Node *head = NULL;
-        struct Node *temp = head;
- 
-		for(int i=0;i<K;i++){
-		int data;
-		cin>>data;
-			if(head==NULL)
-			head=temp=new Node(data);
-			else
-			{
-				temp->next = new Node(data);
-				temp=temp->next;
-			}
-		}
-		
-	    Solution ob;
-		Node *result  = ob.removeDuplicates(head);
-		print(result);
-		cout<<endl;
-		
-	}
-	return 0;
+    int t;
+    cin >> t;
+    cin.ignore();
+
+    while (t--) {
+        vector<int> arr;
+        string input;
+        getline(cin, input);
+        stringstream ss(input);
+        int number;
+
+        while (ss >> number) {
+            arr.push_back(number);
+        }
+
+        if (arr.empty()) {
+            cout << "empty" << endl;
+            continue;
+        }
+
+        Node *head = new Node(arr[0]);
+        Node *tail = head;
+
+        for (size_t i = 1; i < arr.size(); ++i) {
+            tail->next = new Node(arr[i]);
+            tail = tail->next;
+        }
+
+        Solution ob;
+        Node *result = ob.removeDuplicates(head);
+        printList(result);
+    }
+
+    return 0;
 }
+
 // } Driver Code Ends
