@@ -97,39 +97,37 @@ class Solution {
   public:
     vector <int> bottomView(Node *root) {
         // Your Code Here
-        map<int,int>mp; // hd and node->data
-        queue<pair<Node*,int>>q;
-        q.push({root,0});
+        map<int,int>mp;
+        vector<int>v;
+        
+        queue<pair<int,Node*>>q;
+        q.push({0,root});
         
         while(!q.empty())
         {
-            Node* frontNode = q.front().first;
-            int hd = q.front().second;
+            int dist = q.front().first;
+            Node* front = q.front().second;
             q.pop();
             
-            // mapping
-            mp[hd] = frontNode->data; // eCH TIME MAPING NO ONR TO ONE 
+            // mappng but donr need to oe to one
+            mp[dist] = front->data;
             
-            // traverse
-            if(frontNode->left)
+            if(front->left)
             {
-                q.push({frontNode->left,hd-1});
-                
+                q.push({dist-1,front->left});
             }
-            if(frontNode->right)
+            if(front->right)
             {
-                q.push({frontNode->right,hd+1});
+                q.push({dist+1,front->right});
             }
-            
         }
         
-         vector<int>ans;
-         for(auto it:mp)
-         {
-             ans.push_back(it.second);
-         }
-         return ans;
-        
+        // stoe in map
+        for(auto it:mp)
+        {
+            v.push_back(it.second);
+        }
+        return v;
     }
 };
 
