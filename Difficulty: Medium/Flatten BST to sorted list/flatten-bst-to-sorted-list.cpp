@@ -128,47 +128,43 @@ public:
 
 class Solution
 {
+    
     private:
     void solve(Node* root,vector<int>&v)
     {
-        if(root == NULL)
-        {
-            return;
-        }
-        //
+        if(!root) return ;
+        
         solve(root->left,v);
         v.push_back(root->data);
         solve(root->right,v);
-        
-        return;
-        
     }
 public:
     Node *flattenBST(Node *root)
     {
         // code here
+        if(!root) return NULL;
         vector<int>v;
-        solve(root,v); // got th sort vector
+        solve(root,v);
+        //cout<<v.size()<<" ";
         
         Node* newNode = new Node(v[0]);
         Node* current = newNode;
+        
         for(int i = 1;i<v.size();i++)
         {
-            // creting node plus do connection
             Node* temp = new Node(v[i]);
             current->right = temp;
-            current->left = NULL;
+            current->left  = NULL;
             
-            // update curr
+            // update the current
             current = temp;
         }
         
-        // connecton for final elemnt
-        
+        // connection
         current->right = NULL;
         current->left = NULL;
-        return newNode;
         
+        return newNode;
         
     }
 };
