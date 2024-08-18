@@ -105,46 +105,38 @@ class Solution
     vector<int> topView(Node *root)
     {
         //Your code here
-        map<int,int>mp; // mapping with horixontal dist ## dthe ement only one elemnt , thats why using only one elemnt , we dont ned to store all elemnt just need the front elemnt
-        queue<pair<Node*,int>>q; // node # hd
+        map<int,int>mp;
+        queue<pair<int,Node*>>q;
+        q.push({0,root});
         
-        q.push({root,0});
         while(!q.empty())
         {
-            Node* frontNode = q.front().first;
-            int hd = q.front().second;
+            int dist = q.front().first;
+            Node* node = q.front().second;
             q.pop();
             
-            // mapping if not mapping available perevously
-            // 1:1 mapping only
-            
-            if(mp.find(hd) == mp.end()) // if any map not available
+            // oe to onr mapping
+            if(mp.find(dist) == mp.end())
             {
-                mp[hd] = frontNode->data;
+                mp[dist] = node->data;
             }
             
-            // treverse left and right
-            
-            if(frontNode->left)
+            if(node->left)
             {
-                q.push({frontNode->left,hd-1});
+                q.push({dist-1,node->left});
             }
-            if(frontNode->right)
+            if(node->right)
             {
-                q.push({frontNode->right,hd+1});
-                
+                q.push({dist+1,node->right});
             }
         }
         vector<int>v;
-        
-        // all set , mapping done
-        // print the mapping
         for(auto it:mp)
         {
             v.push_back(it.second);
         }
-        return v;
         
+        return v;
     }
 
 };
