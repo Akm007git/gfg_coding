@@ -10,39 +10,37 @@ using namespace std;
 class Solution{
     private:
     
-    int solve(int n, int w, int val[], int wt[],vector<vector<int>>&dp)
+    int solve(int n,int w,int value[],int wt[],vector<vector<int>>&dp)
     {
-        // bae case
-        
-        if(n == 0 || w == 0) return 0;
-        
-        // memo
-        if(dp[n][w] != -1)
+        // base
+        if(n == 0 || w == 0)
         {
-            return dp[n][w];
+            return 0;
         }
         
+        // emmo
         
-        
-        //cond
+     if(dp[n][w] != -1) 
+     {
+         return dp[n][w];
+     }
         
         if(wt[n-1] <= w)
         {
-            return dp[n][w] =  max(val[n-1] + solve(n,w-wt[n-1],val,wt,dp) , solve(n-1,w,val,wt,dp));
+            return  dp[n][w] =  max(value[n-1] + solve(n,w - wt[n-1],value,wt,dp),solve(n-1,w,value,wt,dp));
         }
         else
         {
-            return  dp[n][w] = solve(n-1,w,val,wt,dp);
+            return  dp[n][w] = solve(n-1,w,value,wt,dp);
         }
-        
     }
+    
 public:
-    int knapSack(int n, int w, int val[], int wt[])
+    int knapSack(int N, int W, int val[], int wt[])
     {
         // code here
-        vector<vector<int>>dp(n+1,vector<int>(w+1,-1));
-        return solve(n,w,val,wt,dp);
-        
+        vector<vector<int>>dp(N+1,vector<int>(W+1,-1));
+        return solve(N,W,val,wt,dp);
     }
 };
 
