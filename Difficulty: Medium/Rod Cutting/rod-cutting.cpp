@@ -9,44 +9,39 @@ using namespace std;
 // User function Template for C++
 
 class Solution{
-    private: 
-    int solve(int val[],vector<int>&wt,int n,int w,vector<vector<int>>&dp)
+  
+    int solve(int price[],vector<int>&v,int n,int w,vector<vector<int>>&dp)
     {
         // base
         if(n == 0 || w == 0)
         {
             return 0;
         }
+        if(dp[n][w] != -1) return dp[n][w];
         
-        // memo
-        if(dp[n][w] != -1)
+        if(v[n-1] <= w)
         {
-            return dp[n][w];
-        }
-        
-        // rec
-        if(wt[n-1] <= w)
-        {
-            return dp[n][w] =   max( val[n-1] + solve(val,wt,n,w-wt[n-1],dp), solve(val,wt,n-1,w,dp) );
+            return dp[n][w] =  max(price[n-1] + solve(price,v,n,w - v[n-1],dp),
+                    solve(price,v,n-1,w,dp));
         }
         else
         {
-            return dp[n][w] =  solve(val,wt,n-1,w,dp);
+            return dp[n][w] =  solve(price,v,n-1,w,dp);
         }
     }
+    
     
   public:
     int cutRod(int price[], int n) {
         //code here
-        vector<int>len(n);
-        vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+        
+        vector<int>v(n);
         for(int i = 0;i<n;i++)
         {
-            len[i] = i + 1;
+            v[i] = i+1;
         }
-        
-        
-       return solve(price,len,n,n,dp);
+        vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+        return solve(price,v,n,n,dp);
     }
 };
 
