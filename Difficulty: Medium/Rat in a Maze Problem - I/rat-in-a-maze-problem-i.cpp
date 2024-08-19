@@ -9,54 +9,78 @@ using namespace std;
 // User function template for C++
 
 class Solution {
-private:
-    void solve(int row, int col, int n, string str, vector<vector<int>>& matrix, vector<string>& ans, vector<vector<bool>>& visited, int delRow[], int delCol[], string &direction) {
-        // Base case: Reached the destination
-        if (row == n-1 && col == n-1) {
+    
+    
+    void solve(int row,int col,vector<vector<int>>&matrix,vector<vector<bool>>&visited,int n,
+    string str,vector<string>&ans,int delRow [],int delCol [],string &direction)
+    {
+        // base
+        if( row == n-1 && col == n-1)
+        {
             ans.push_back(str);
             return;
         }
-
-        // Exploring all 4 possible directions
-        for (int i = 0; i < 4; i++) {
+        
+        // traverse the whole array
+        
+        for(int i = 0;i<4;i++)
+        {
             int nrow = row + delRow[i];
             int ncol = col + delCol[i];
-
-            // Check if the move is valid and the cell is not visited
-            if (nrow >= 0 && nrow < n && ncol >= 0 && ncol < n && !visited[nrow][ncol] && matrix[nrow][ncol] == 1) {
-                // Mark the cell as visited
-                visited[nrow][ncol] = true;
-                
-                // Recursively solve for the next cell
-                solve(nrow, ncol, n, str + direction[i], matrix, ans, visited, delRow, delCol, direction);
-                
-                // Backtrack: Unmark the cell as visited
-                visited[nrow][ncol] = false;
-            }
+            
+    
+            if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < n && !visited[nrow][ncol] &&
+               matrix[nrow][ncol] == 1 )
+               {
+                   // two do
+              
+                   
+                   // recursion
+                   // visited
+                   visited[nrow][ncol] = true;
+                   
+                   // recursion
+                   solve(nrow,ncol,matrix,visited,n,str + direction[i],ans,delRow,delCol,direction);
+                   
+                   // while returning
+                   visited[nrow][ncol] = false;
+                   
+                   
+               }
         }
-    }
-
-public:
-    vector<string> findPath(vector<vector<int>>& matrix) {
-        vector<string> ans;
-        int n = matrix.size();
-        if (n == 0) return ans;  // Edge case: empty matrix
         
-        vector<vector<bool>> visited(n, vector<bool>(n, false));
-        int delRow[] = {1, 0, 0, -1};  // Down, Right, Left, Up
-        int delCol[] = {0, 1, -1, 0};  // Down, Right, Left, Up
-        string direction = "DRLU";     // Directions mapped to the above movements
-
-        // If the start cell is open, begin the search
-        if (matrix[0][0] == 1) {
-            visited[0][0] = true;  // Mark the starting cell as visited
-            solve(0, 0, n, "", matrix, ans, visited, delRow, delCol, direction);
+    }
+    
+  public:
+    vector<string> findPath(vector<vector<int>> &matrix) {
+        // Your code goes here
+            vector<string>ans;
+             int n = matrix.size();
+            if (n == 0) return ans; 
+     
+             string str = "";
+      
+        
+          vector<vector<bool>>visited(n,vector<bool>(n,false));
+                 
+            int delRow [] = {-1,0,1,0};
+            int delCol [] = {0,1,0,-1};
+            string direction = "URDL";
+    
+        // syarting pouny
+        if(matrix[0][0] == 1)
+        {
+            visited[0][0] = true;
+            solve(0,0,matrix,visited,n,str,ans,delRow,delCol,direction);
+           
         }
-
-        return ans;
+        
+        
+         return ans;
+        
+       
     }
 };
-
 
 
 //{ Driver Code Starts.
