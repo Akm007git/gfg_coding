@@ -35,6 +35,8 @@ while(t--)
 	}
 	ss->sort();
 	printStack(ss->s);
+
+cout << "~" << "\n";
 }
 }
 // } Driver Code Ends
@@ -50,33 +52,34 @@ public:
 
 /* The below method sorts the stack s 
 you are required to complete the below method */
-void  solve(stack<int>&st,int ele)
+void rightPosition(stack<int>&st,int element)
 {
-    //base
-    if(st.empty() ||  st.top() <= ele)
+    if(st.empty() || st.top() <= element)
     {
-        st.push(ele);
+        st.push(element);
         return;
     }
-    
-    // others
-    int num = st.top();
+    // else do the rest opeartion
+    int top = st.top();
     st.pop();
     
-    solve(st,ele);
-    st.push(num);
+    rightPosition(st,element);
+    st.push(top);
+    
 }
 void SortedStack :: sort()
 {
    //Your code here
-   if(s.empty())
-   {
-       return;
-   }
+   if(s.empty()) return;
    
+   // elsse
    int top = s.top();
    s.pop();
    
-   sort();
-   return solve(s,top); // to set it in his right position
+   // use recurion
+   sort(); // basically extarct all the things
+   // now while returning at the currect position
+   
+   return rightPosition(s,top);
+   
 }
