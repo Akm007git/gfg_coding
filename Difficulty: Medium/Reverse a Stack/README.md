@@ -1,4 +1,4 @@
-<h2><a href="https://www.geeksforgeeks.org/problems/reverse-a-stack/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=practice_card">Reverse a Stack</a></h2><h3>Difficulty Level : Difficulty: Medium</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 18px;">You are given a stack <strong>St</strong>. You have to reverse the stack using recursion.</span></p>
+<h2><a href="https://www.geeksforgeeks.org/problems/reverse-a-stack/1">Reverse a Stack</a></h2><h3>Difficulty Level : Difficulty: Medium</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 18px;">You are given a stack <strong>St</strong>. You have to reverse the stack using recursion.</span></p>
 <p><strong><span style="font-size: 18px;">Example 1:</span></strong></p>
 <pre><strong><span style="font-size: 18px;">Input:</span></strong>
 <span style="font-size: 18px;">St = {3,2,1,7,6}</span>
