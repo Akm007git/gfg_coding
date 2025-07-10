@@ -1,75 +1,49 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
-
-// } Driver Code Ends
 class Solution {
     private:
-    void solve(int start,vector<int>adj[],vector<bool>&visited,vector<int>&ans)
+    void bfs(int start,vector<vector<int>>&adj,vector<bool>&visited,vector<int>&ans)
     {
+        //start with firat node
+        // initialize a queue
         queue<int>q;
         q.push(start);
         visited[start] = true;
         
+        // operation
         while(!q.empty())
         {
-            int node = q.front();
+            int frontNode = q.front();
+            ans.push_back(frontNode); // store while popping from the queue
             q.pop();
             
-            ans.push_back(node);
-            
-            for(auto it:adj[node])
+            // now traverse the adjacent node
+            for(auto it:adj[frontNode])
             {
                 if(!visited[it])
                 {
-                    visited[it] = true;
                     q.push(it);
+                    visited[it] = true;
                 }
             }
         }
     }
   public:
     // Function to return Breadth First Traversal of given graph.
-    vector<int> bfsOfGraph(int V, vector<int> adj[]) {
+    vector<int> bfs(vector<vector<int>> &adj) {
         // Code here
-        vector<int>ans;
-        vector<bool>visited(V,false);
+        int v  = adj.size();
         
-       
-                solve(0,adj,visited,ans);
-            
+        vector<bool>visited(v,false);
+        vector<int>ans;
+        
+        for(int i = 0;i<v;i++)
+        {
+            if(!visited[i])
+            {
+                bfs(i,adj,visited,ans);
+            }
+        }
         
         return ans;
+        
     }
 };
-
-//{ Driver Code Starts.
-int main() {
-    int tc;
-    cin >> tc;
-    while (tc--) {
-        int V, E;
-        cin >> V >>
-
-            E;
-
-        vector<int> adj[V];
-
-        for (int i = 0; i < E; i++) {
-            int u, v;
-            cin >> u >> v;
-            adj[u].push_back(v);
-            // 		adj[v].push_back(u);
-        }
-        // string s1;
-        // cin>>s1;
-        Solution obj;
-        vector<int> ans = obj.bfsOfGraph(V, adj);
-        for (int i = 0; i < ans.size(); i++) {
-            cout << ans[i] << " ";
-        }
-        cout << endl;
-    }
-    return 0;
-}
-// } Driver Code Ends
